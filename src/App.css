@@ -11,9 +11,5 @@
   top: inherit;
   left: inherit;
   width: inherit;
-}
-
-map, area {
-  border: 2px solid #00e90c;
-  background: #00e90c;
+  cursor: pointer;
 }

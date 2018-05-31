@@ -8,12 +8,11 @@ class App extends Component {
 
   constructor(props) {
     super(props)
+
+    this.pin = 0
   
     this.state = {
       marcadores: [],
-       posX: 0,
-       posY: 0,
-       display: 'none',
        counter: 0,
        containerWidth: 0,
        containerHeight: 0
@@ -81,7 +80,7 @@ class App extends Component {
         }
 
         {/* <Pin refValue={ ref => this.pin = ref } posX={`${ this.state.posX }px`} posY={`${ this.state.posY }px`} display={ this.state.display } /> */}
-        { this.state.count !== 'none' && <Pin refValue={ ref => this.pin = ref } counter={ this.state.counter } posX={`${ this.state.posX }px`} posY={`${ this.state.posY }px`} display={ this.state.display } /> }
+        {/* { this.state.count && <Pin refValue={ ref => this.pin = ref } counter={ this.state.counter } posX={`${ this.state.posX }px`} posY={`${ this.state.posY }px`} display={ this.state.display } /> } */}
       </div>
     );
   }
