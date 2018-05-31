@@ -12,7 +12,7 @@ class App extends Component {
     this.pin = 0
   
     this.state = {
-      marcadores: [],
+      marcadores: [], // Array onde serão guardados os estados de cada marcado (posição no eixo X, posição no eixo Y, contador, display)
        counter: 0,
        containerWidth: 0,
        containerHeight: 0
@@ -27,16 +27,16 @@ class App extends Component {
   handleClickContainer = ( e ) => {
     const offW = this.pin.offsetWidth || 29
     const offY = this.pin.offsetHeight || 29
-
+    // A cada clique na imagem um objeto é gerado com os dados abaixo relacionados
     const marcador = {
       posX: e.clientX - ( offW / 2 ),
       posY: e.clientY - ( offY / 2 ),
       counter: this.state.counter + 1,
       display: 'block',
-      containerWidth: this.container.offsetWidth,
-      containerHeight: this.img.offsetHeight,
+      // containerWidth: this.container.offsetWidth,
+      // containerHeight: this.img.offsetHeight,
     }
-    
+    // Altero o estado do array macadores acrescentando o novo objeto e atualizo o contador.
     this.setState({
       counter: this.state.counter + 1,
       marcadores: [...this.state.marcadores, marcador]
@@ -72,15 +72,13 @@ class App extends Component {
     return (
       <div ref={ ref => this.container = ref } className="container" onClick={ this.handleClickContainer }>
         <img ref={ ref => this.img = ref } src={estomatos} useMap='#image-map' />
-        
+        {/* Percorre o array de objetos dos marcadores e mostro eles na tela. */}
         {
           Object
             .keys( this.state.marcadores )
             .map( key => this.mostrarPin( key, this.state.marcadores[key] ))
         }
 
-        {/* <Pin refValue={ ref => this.pin = ref } posX={`${ this.state.posX }px`} posY={`${ this.state.posY }px`} display={ this.state.display } /> */}
-        {/* { this.state.count && <Pin refValue={ ref => this.pin = ref } counter={ this.state.counter } posX={`${ this.state.posX }px`} posY={`${ this.state.posY }px`} display={ this.state.display } /> } */}
       </div>
     );
   }
