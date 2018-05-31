@@ -10,6 +10,7 @@ class App extends Component {
     super(props)
   
     this.state = {
+      marcadores: [],
        posX: 0,
        posY: 0,
        display: 'none',
@@ -19,22 +20,27 @@ class App extends Component {
     }
   }
 
-  componentDidMount = () => {
-    window.addEventListener("resize", this.handlePosition)
-  }
+  // componentDidMount = () => {
+  //   window.addEventListener("resize", this.handlePosition)
+  // }
   
 
   handleClickContainer = ( e ) => {
     const offW = this.pin.offsetWidth || 29
     const offY = this.pin.offsetHeight || 29
-    
-    this.setState({
+
+    const marcador = {
       posX: e.clientX - ( offW / 2 ),
       posY: e.clientY - ( offY / 2 ),
-      display: 'block',
       counter: this.state.counter + 1,
+      display: 'block',
       containerWidth: this.container.offsetWidth,
-      containerHeight: this.img.offsetHeight
+      containerHeight: this.img.offsetHeight,
+    }
+    
+    this.setState({
+      counter: this.state.counter + 1,
+      marcadores: [...this.state.marcadores, marcador]
     })
   }
 
@@ -52,15 +58,33 @@ class App extends Component {
     })
   }
   
+  mostrarPin = ( key_marcador ) => {
+    return (
+      <Pin 
+        refValue={ ref => this.pin = ref } 
+        counter={ this.state.marcadores[key_marcador].counter } 
+        posX={`${ this.state.marcadores[key_marcador].posX }px`} 
+        posY={`${ this.state.marcadores[key_marcador].posY }px`} 
+        display={ this.state.marcadores[key_marcador].display } />
+    )
+  }
+  
   render() {
     return (
       <div ref={ ref => this.container = ref } className="container" onClick={ this.handleClickContainer }>
-        <img ref={ ref => this.img = ref } src={estomatos} />
-        <Pin refValue={ ref => this.pin = ref } posX={`${ this.state.posX }px`} posY={`${ this.state.posY }px`} display={ this.state.display } />
-        { this.state.display !== 'none' && <Pin refValue={ ref => this.pin = ref } counter={ this.state.counter } posX={`${ this.state.posX }px`} posY={`${ this.state.posY }px`} display={ this.state.display } /> }
+        <img ref={ ref => this.img = ref } src={estomatos} useMap='#image-map' />
+        
+        {
+          Object
+            .keys( this.state.marcadores )
+            .map( key => this.mostrarPin( key, this.state.marcadores[key] ))
+        }
+
+        {/* <Pin refValue={ ref => this.pin = ref } posX={`${ this.state.posX }px`} posY={`${ this.state.posY }px`} display={ this.state.display } /> */}
+        { this.state.count !== 'none' && <Pin refValue={ ref => this.pin = ref } counter={ this.state.counter } posX={`${ this.state.posX }px`} posY={`${ this.state.posY }px`} display={ this.state.display } /> }
       </div>
     );
   }
 }
 
-export default App;
+export default App
